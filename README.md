@@ -29,6 +29,24 @@ Opening `http://[project url]/admin` in your browser gives you access to the sta
 
 This project's flake provides a devShell that sets up everything for you. Activate it by executing `nix develop` or using direnv, and the manage.py commands will work as above.
 
+### Using Docker
+
+The repository also provides a `Dockerfile` and `docker-compose.yml`. Build the
+container image and start the development server via:
+
+```bash
+docker compose up --build
+```
+
+The CI workflow automatically publishes the image to the
+[GitHub Container Registry](https://github.com/features/packages).
+If you just want to run the prebuilt image, pull it via:
+
+```bash
+docker pull ghcr.io/<owner>/<repo>:latest
+```
+
+
 ## Changing the database model
 
 When changing the database model make sure that the fixture located in `course/fixtures/courses.yaml` still works.
