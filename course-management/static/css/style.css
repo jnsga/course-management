@@ -2,3 +2,27 @@ img {
     width: 100%;
     display: block;
 }
+
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode .bg-light {
+    background-color: #343a40 !important;
+}
+
+.dark-mode .navbar-light .navbar-nav .nav-link,
+.dark-mode .navbar-light .navbar-brand {
+    color: #e0e0e0;
+}
+
+.dark-mode a {
+    color: #4da3ff;
+}
+
+.dark-mode .list-group-item {
+    background-color: #1e1e1e;
+    border-color: #444;
+}

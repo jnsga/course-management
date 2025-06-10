@@ -50,6 +50,9 @@
   <li class="nav-item">
     <a class="nav-link" href="{% url 'logout' %}">{% trans 'Logout' %}</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#" id="dark-mode-toggle" onclick="toggleDarkMode(); return false;">{% trans 'Dark mode' %}</a>
+  </li>
   {% else %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'register' %}">{% trans "Sign up" %}</a>
