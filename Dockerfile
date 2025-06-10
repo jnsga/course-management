@@ -1,7 +1,7 @@
 FROM python:3.10-slim
 ENV PYTHONUNBUFFERED=1
 WORKDIR /app
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml poetry.lock README.md ./
 RUN pip install --no-cache-dir poetry \
     && poetry config virtualenvs.create false \
     && poetry install --without dev --no-interaction --no-ansi
