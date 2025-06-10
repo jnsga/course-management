@@ -46,6 +46,17 @@ If you just want to run the prebuilt image, pull it via:
 docker pull ghcr.io/<owner>/<repo>:latest
 ```
 
+You can also use the provided `docker-compose.yml` without cloning the
+repository. The Compose file will run the image with a basic development
+configuration:
+
+```bash
+docker compose up
+```
+
+The Compose file configures the container using environment variables. Feel free
+to adjust these variables to customize the deployment.
+
 
 ## Changing the database model
 
