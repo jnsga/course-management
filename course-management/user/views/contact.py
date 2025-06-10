@@ -10,7 +10,7 @@ from util.error.reporting import db_error
 
 CONTACT_FOOTER = """
 -------------------
-This message has been sent via the Course Mangement System.
+This message has been sent via the Course Management System.
 Sent by: """
 
 @login_required

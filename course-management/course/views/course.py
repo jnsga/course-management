@@ -33,12 +33,12 @@ We will explore the universe.
 
 CONTACT_FOOTER = """
 -------------------
-This message has been sent via the Course Mangement System at https://kurse.ifsr.de.
+This message has been sent via the Course Management System at https://kurse.ifsr.de.
 Sent by: """
 
 BLANK_FOOTER = """
 -------------------
-This message has been sent via the Course Mangement System at https://kurse.ifsr.de.
+This message has been sent via the Course Management System at https://kurse.ifsr.de.
 """
 
 
@@ -117,7 +117,7 @@ def edit_course(request: HttpRequest, course_id: str):
             return redirect('course', course_id)
 
     else:
-        # FIXME(feliix42): Manually setting the start & end date here is required beacuse I just can't get django to format the date correctly in the Form setup
+        # FIXME(feliix42): Manually setting the start & end date here is required because I just can't get django to format the date correctly in the Form setup
         form = CourseForm(instance=current_course,initial={
             'schedule_type':current_schedule.get_type(),
             'start_time': current_course.start_time.strftime('%Y-%m-%d'),
