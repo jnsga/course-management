@@ -856,8 +856,8 @@ msgstr ""
 
 #: user/forms.py:43
 msgid ""
-"An email adress where you can be reached. The verification mail will be sent "
-"to this adress."
+"An email address where you can be reached. The verification mail will be sent "
+"to this address."
 msgstr ""
 
 #: user/forms.py:45 user/forms.py:65
