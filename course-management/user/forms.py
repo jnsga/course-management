@@ -40,8 +40,8 @@ class UserForm(UserCreationForm):
             'username': _('Username')
         }
         help_texts = {
-            'email': _('An email adress where you can be reached. '
-                       'The verification mail will be sent to this adress.'),
+            'email': _('An email address where you can be reached. '
+                       'The verification mail will be sent to this address.'),
             'first_name': _('First part of your public name, which should be your genuine first name. '
                             'If you become a teacher this will be visible to any site visitor. '
                             'Can be modified later.'),
