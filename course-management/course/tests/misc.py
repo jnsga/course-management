@@ -23,6 +23,7 @@ def insert_dummy_data():
     c1 = Course.objects.create(
         subject=s1,
         max_participants=1,
+        archiving='t',
     )
     c1.teacher.add(u1)
     c1.save()
