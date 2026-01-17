@@ -1409,10 +1409,6 @@ msgstr "Warning"
 msgid "This action will remove the student from the current course and enroll them in the selected target course. This action cannot be undone easily."
 msgstr "This action will remove the student from the current course and enroll them in the selected target course. This action cannot be undone easily."
 
-#: course/templates/course/move-student.html:53
-msgid "Move Student"
-msgstr "Move Student"
-
 #: course/templates/course/attendees.html:27
 msgid "Move"
 msgstr "Move"
