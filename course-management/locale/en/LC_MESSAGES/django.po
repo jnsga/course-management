@@ -1420,3 +1420,7 @@ msgstr "Target Course"
 #: course/forms.py:137
 msgid "Select the course to move the student to."
 msgstr "Select the course to move the student to."
+
+#: course/views/course.py:458
+msgid "Student {} has been successfully moved from {} to {}."
+msgstr "Student {} has been successfully moved from {} to {}."
