@@ -1,4 +1,4 @@
-import random
+import secrets
 import string
 import os
 
@@ -50,8 +50,6 @@ def register(request):
                     'mail': acc
                 }
             )
-        else:
-            print('validation failed')
     else:
         user_form = UserForm()
         userinformation_form = UserInformationForm()
@@ -68,11 +66,15 @@ def register(request):
 
 
 def generateToken(size=50, chars=None):
+    """
+    Generate a cryptographically secure random token.
+    Uses secrets module for secure random generation.
+    """
     chars = (chars
              if chars is not None
              else string.ascii_uppercase + string.digits + string.ascii_lowercase
              )
-    return ''.join(random.sample(chars, size))
+    return ''.join(secrets.choice(chars) for _ in range(size))
 
 
 def verification_mail(user, type_, email, request):
@@ -84,7 +86,6 @@ def verification_mail(user, type_, email, request):
     Activation.objects.create(user=user, token=user_token, type=type_val)
     activateurl = request.build_absolute_uri(
         reverse('verify', args=[type_])) + '?token=' + user_token
-    # print(activateurl)
     with open(os.path.join(settings.BASE_DIR, 'res/registrationmail.txt')) as f:
         message = f.read()
         message = message.format(
@@ -93,11 +94,9 @@ def verification_mail(user, type_, email, request):
         )
 
     userinf = user.userinformation
-    # print(message)
     send_mail(
         _('Your {} verification at the iFSR course enrollment system.'.format(type_)),
         message,
         None,
         [email],
     )
-    # print(user_token)

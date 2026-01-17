@@ -47,7 +47,15 @@ def verify(request, type_):
             )
     else:
         try:
-            db_entry = Activation.objects.get(token=request.GET['token'], type=ACTIVATION_TYPES[type_])
+            # Safely get token from GET parameters
+            token = request.GET.get('token', '')
+            if not token:
+                return render(
+                    request,
+                    'view-error.html',
+                    { 'message': _('The token you provided is invalid.') }
+                )
+            db_entry = Activation.objects.get(token=token, type=ACTIVATION_TYPES[type_])
         except Activation.DoesNotExist:
             return render(
                 request,
