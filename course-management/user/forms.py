@@ -94,14 +94,16 @@ class ContactForm(forms.Form):
         'This will become the subject field of the resulting email.'))
     content = forms.CharField(
         widget=forms.Textarea,
-        help_text=_('This will be the content of the email. HTML is not allowed '
-                    'and any html tags will be removed.')
+        help_text=_('This will be the content of the email. Links are allowed, '
+                    'but other HTML tags will be removed for security reasons.')
     )
 
     def clean(self):
         super().clean()
         self.subject = html_clean.clean_all(self.data['subject'])
-        self.content = html_clean.clean_all(self.data['content'])
+        # Fix for Issue #107: Allow links in contact form content
+        # Only allow <a> tags with href attribute, remove all other HTML
+        self.content = html_clean.clean_for_contact(self.data['content'])
 
 
 class PrivacyAgreementForm(ModelForm):

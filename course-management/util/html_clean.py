@@ -28,3 +28,13 @@ def clean_all(html):
     Removes *all* html tags.
     """
     return bleach.clean(html, tags=[], attributes=[], strip=True)
+
+
+def clean_for_contact(html):
+    """
+    Allows only links (<a> tags) in contact form content for Issue #107.
+    All other HTML tags are removed for security.
+    """
+    # Only allow <a> tags with href attribute
+    allowed_attrs = {'a': ['href', 'title']}
+    return bleach.clean(html, tags=['a'], attributes=allowed_attrs, strip=True)
