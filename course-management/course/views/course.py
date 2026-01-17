@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 from guardian.shortcuts import assign_perm
 from guardian.shortcuts import remove_perm
 
-from course.forms import CourseForm, AddTeacherForm, NotifyCourseForm
+from course.forms import CourseForm, AddTeacherForm, NotifyCourseForm, MoveStudentForm
 from course.models.course import Course
 from course.models.schedule import Schedule
 from course.models.subject import Subject
@@ -369,6 +369,115 @@ def remove_student(request: HttpRequest, course_id:str, student_id:str):
         return db_error(request, _('Requested student is not enrolled in this course.'))
 
     return redirect('course', course_id)
+
+
+@login_required()
+def move_student(request: HttpRequest, course_id: str, student_id: str):
+    """
+    Fix for Issue #66: Allow superusers to move students between courses.
+    Only accessible to superusers.
+    """
+    # Check if user is superuser
+    if not request.user.is_superuser:
+        return db_error(request, _('Only superusers can move students between courses.'))
+    
+    try:
+        source_course = Course.objects.get(id=course_id)
+        student = UserInformation.objects.get(id=student_id)
+    except Course.DoesNotExist:
+        return db_error(request, _('Requested course does not exist.'))
+    except UserInformation.DoesNotExist:
+        return db_error(request, _('Requested student does not exist.'))
+    
+    # Check if student is enrolled in source course
+    if not source_course.is_participant(student):
+        return db_error(request, _('Student is not enrolled in the source course.'))
+    
+    if request.method == 'POST':
+        form = MoveStudentForm(request.POST, exclude_course=source_course)
+        if form.is_valid():
+            target_course = form.cleaned_data['target_course']
+            
+            try:
+                # Check if student is already enrolled in target course
+                if target_course.is_participant(student):
+                    return db_error(
+                        request,
+                        _('Student is already enrolled in the target course.')
+                    )
+                
+                # Unenroll from source course
+                source_course.unenroll(student)
+                
+                # Enroll in target course (bypass active check for superuser move)
+                # We need to temporarily set active=True if it's not active
+                was_active = target_course.active
+                was_archived = target_course.is_archived()
+                
+                if not was_active:
+                    target_course.active = True
+                    target_course.save()
+                
+                try:
+                    # Temporarily set archiving to 't' if archived, to allow enrollment
+                    if was_archived:
+                        original_archiving = target_course.archiving
+                        target_course.archiving = 't'
+                        target_course.save()
+                    
+                    target_course.enroll(student)
+                except (Course.IsEnrolled, Course.IsInactive, Course.IsArchived) as e:
+                    # If enrollment fails, re-enroll in source course
+                    if not was_active:
+                        target_course.active = False
+                        target_course.save()
+                    if was_archived:
+                        target_course.archiving = original_archiving
+                        target_course.save()
+                    # Try to re-enroll in source course
+                    try:
+                        source_course.enroll(student)
+                    except:
+                        pass  # If this fails, at least we tried
+                    return db_error(
+                        request,
+                        _('Failed to enroll student in target course. Student remains in source course.')
+                    )
+                finally:
+                    # Restore original active state
+                    if not was_active:
+                        target_course.active = False
+                        target_course.save()
+                    if was_archived:
+                        target_course.archiving = original_archiving
+                        target_course.save()
+                
+                from django.contrib import messages
+                messages.success(
+                    request,
+                    _('Student {} has been successfully moved from {} to {}.'.format(
+                        student, source_course.subject.name, target_course.subject.name
+                    ))
+                )
+                return redirect('course-participants', course_id)
+            except Exception as e:
+                return db_error(
+                    request,
+                    _('An error occurred while moving the student: {}').format(str(e))
+                )
+    else:
+        form = MoveStudentForm(exclude_course=source_course)
+    
+    return render(
+        request,
+        'course/move-student.html',
+        {
+            'title': _('Move Student'),
+            'form': form,
+            'course': source_course,
+            'student': student,
+        }
+    )
 
 
 @needs_teacher_permissions

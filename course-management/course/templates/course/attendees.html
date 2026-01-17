@@ -23,7 +23,10 @@
           <a class="btn btn-lin {% if forloop.counter > course.max_participants %}text-muted{% endif %}" href="{% url 'user-profile' student.user_id %}">Profile Page</a>
         </td>
         <td>
-          <form action="{% url 'unregister-course' course.id student.id %}" method="post">
+          {% if user.is_superuser %}
+          <a class="btn btn-link btn-sm" href="{% url 'move-student' course.id student.id %}">{% trans 'Move' %}</a>
+          {% endif %}
+          <form action="{% url 'unregister-course' course.id student.id %}" method="post" style="display: inline;">
             {% csrf_token %}
             <input type="submit" class="btn btn-link {% if forloop.counter > course.max_participants %}text-muted{% endif %}" value="{% trans 'Remove' %}">
           </form>

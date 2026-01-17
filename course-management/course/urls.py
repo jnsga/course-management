@@ -36,6 +36,8 @@ urlpatterns = [
             {'active': False}, name='deactivate-course'),
         re_path(r'^participants/$', course.participants_list,
             name='course-participants'),
+        re_path(r'^move-student/(?P<student_id>[0-9]+)/$', course.move_student,
+            name='move-student'),
         re_path(r'^notify/', include([
             re_path(r'^$', course.notify, name='notify-course'),
             re_path(r'^done/$', course.notify_done, name='notify-course-done'),

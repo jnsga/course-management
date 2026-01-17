@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+
+<h1 class="mb-3">{% trans 'Move Student' %}</h1>
+
+<div class="card border-secondary mb-3">
+  <div class="card-header">
+    <h3>{% trans 'Student Information' %}</h3>
+  </div>
+  <div class="card-body">
+    <p><strong>{% trans 'Student' %}:</strong> {{ student }}</p>
+    <p><strong>{% trans 'Current Course' %}:</strong> {{ course.subject.name }}</p>
+  </div>
+</div>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    <h3>{% trans 'Select Target Course' %}</h3>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      
+      {{ form.non_field_errors }}
+      
+      <div class="form-group">
+        <label class="col-form-label" for="{{ form.target_course.id_for_label }}">
+          {{ form.target_course.label }}
+        </label>
+        <select class="form-control" name="{{ form.target_course.html_name }}" id="{{ form.target_course.id_for_label }}" required>
+          <option value="">{% trans '-- Select a course --' %}</option>
+          {% for choice in form.target_course.field.queryset %}
+            <option value="{{ choice.id }}">{{ choice.subject.name }} ({{ choice.id }})</option>
+          {% endfor %}
+        </select>
+        {% if form.target_course.errors %}
+          <div class="invalid-feedback d-block">
+            {% for error in form.target_course.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if form.target_course.help_text %}
+          <small class="form-text text-muted">{{ form.target_course.help_text }}</small>
+        {% endif %}
+      </div>
+      
+      <div class="alert alert-warning">
+        <strong>{% trans 'Warning' %}:</strong> {% trans 'This action will remove the student from the current course and enroll them in the selected target course. This action cannot be undone easily.' %}
+      </div>
+      
+      <input type="submit" class="btn btn-primary" value="{% trans 'Move Student' %}">
+      <a href="{% url 'course-participants' course.id %}" class="btn btn-secondary">{% trans 'Cancel' %}</a>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

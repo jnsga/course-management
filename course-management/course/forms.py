@@ -129,6 +129,25 @@ class NotifyCourseForm(ContactForm):
     )
 
 
+class MoveStudentForm(forms.Form):
+    """Form for moving a student from one course to another (Issue #66)"""
+    target_course = forms.ModelChoiceField(
+        queryset=Course.objects.none(),  # Will be set in view
+        label=_('Target Course'),
+        help_text=_('Select the course to move the student to.')
+    )
+
+    def __init__(self, *args, exclude_course=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if exclude_course:
+            # Exclude the source course and archived courses
+            self.fields['target_course'].queryset = Course.objects.exclude(
+                id=exclude_course.id
+            ).exclude(
+                archiving='a'
+            ).order_by('subject__name', 'id')
+
+
 class SubjectForm(ModelForm):
     name = forms.CharField(
         validators=[subject_name_validator,
