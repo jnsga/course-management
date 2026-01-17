@@ -452,6 +452,29 @@ def move_student(request: HttpRequest, course_id: str, student_id: str):
                         target_course.archiving = original_archiving
                         target_course.save()
                 
+                # Send email notification to student about the move
+                try:
+                    subject = _('[iFSR Course Manager] Course enrollment changed')
+                    message = _(
+                        'Hello {},\n\n'
+                        'You have been moved from the course "{}" to the course "{}" by an administrator.\n\n'
+                        'You can view your new course here: {}\n\n'
+                        'If you have any questions, please contact the course administrators.\n\n'
+                        'Best regards,\n'
+                        'The Course Management System'
+                    ).format(
+                        student.user.first_name,
+                        source_course.subject.name,
+                        target_course.subject.name,
+                        request.build_absolute_uri(reverse('course', args=[target_course.id]))
+                    )
+                    student.user.email_user(subject, message)
+                except Exception as email_error:
+                    # Log error but don't fail the move operation
+                    import logging
+                    logger = logging.getLogger(__name__)
+                    logger.warning(f'Failed to send move notification email: {email_error}')
+                
                 from django.contrib import messages
                 messages.success(
                     request,
