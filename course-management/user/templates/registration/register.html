@@ -87,14 +87,16 @@
   </div>
 
   <div class="form-group {% if user_form.password2.errors %}has-danger{% endif %}">
-    <label class="col-form-label" for="{{ user_form.password2.id_for_label }}">{% trans 'Confirmation' %}</label>
-    <input type="password" class="form-control {% if user_form.password2.errors %}is-invalid{% endif %}" id="{{ user_form.password2.id_for_label }}" name="{{ user_form.password2.html_name }}" aria-describedby="passHelp" required="" {% if user_form.password2.value %}value="{{ user_form.password2.value }}"{% endif %}>
+    <label class="col-form-label" for="{{ user_form.password2.id_for_label }}">{% trans 'Password Confirmation' %}</label>
+    <input type="password" class="form-control {% if user_form.password2.errors %}is-invalid{% endif %}" id="{{ user_form.password2.id_for_label }}" name="{{ user_form.password2.html_name }}" aria-describedby="pass2Help" required="" {% if user_form.password2.value %}value="{{ user_form.password2.value }}"{% endif %}>
     {% if user_form.password2.errors %}
       <div class="invalid-feedback">
         {% for err in user_form.password2.errors %}
           {{ err }}
         {% endfor %}
       </div>
+    {% else %}
+    <small id="pass2Help" class="form-text text-muted">{% trans 'Please confirm your password by entering it again.' %}</small>
     {% endif %}
   </div>
 
