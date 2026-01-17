@@ -385,11 +385,17 @@ def attendee_list(request, course_id):
         except ValueError:
             slots = 0
 
+        # Fix for Issue #103: Only show enrolled participants, not waiting list
+        # Get only the first max_participants participants (enrolled students)
+        from course.models.course import Participation
+        enrolled_participations = Participation.objects.filter(course=course).order_by('ticket_number')[:course.max_participants]
+        enrolled_attendees = [p.participant for p in enrolled_participations]
+
         return render(
                 request,
                 'course/attendee-list.html',
                 {
-                    'attendees': course.participants.all(),
+                    'attendees': enrolled_attendees,
                     'slots': range(slots)
                 }
         )
