@@ -1565,3 +1565,23 @@ msgstr "Das angegebene Token ist ungültig."
 #: user/views/verify.py:64
 msgid "Activation Succeded"
 msgstr "Aktivierung erfolgreich"
+
+#: course/views/course.py:455
+msgid "[iFSR Course Manager] Course enrollment changed"
+msgstr "[iFSR Kurs Manager] Kurseinschreibung geändert"
+
+#: course/views/course.py:456
+msgid ""
+"Hello {},\n\n"
+"You have been moved from the course \"{}\" to the course \"{}\" by an administrator.\n\n"
+"You can view your new course here: {}\n\n"
+"If you have any questions, please contact the course administrators.\n\n"
+"Best regards,\n"
+"The Course Management System"
+msgstr ""
+"Hallo {},\n\n"
+"Du wurdest von einem Administrator vom Kurs \"{}\" zum Kurs \"{}\" verschoben.\n\n"
+"Du kannst deinen neuen Kurs hier einsehen: {}\n\n"
+"Falls du Fragen hast, wende dich bitte an die Kursadministratoren.\n\n"
+"Mit freundlichen Grüßen,\n"
+"Das Kurs Management System"

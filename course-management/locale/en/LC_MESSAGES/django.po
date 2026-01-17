@@ -1356,3 +1356,23 @@ msgstr ""
 #: user/views/verify.py:64
 msgid "Activation Succeded"
 msgstr ""
+
+#: course/views/course.py:455
+msgid "[iFSR Course Manager] Course enrollment changed"
+msgstr "[iFSR Course Manager] Course enrollment changed"
+
+#: course/views/course.py:456
+msgid ""
+"Hello {},\n\n"
+"You have been moved from the course \"{}\" to the course \"{}\" by an administrator.\n\n"
+"You can view your new course here: {}\n\n"
+"If you have any questions, please contact the course administrators.\n\n"
+"Best regards,\n"
+"The Course Management System"
+msgstr ""
+"Hello {},\n\n"
+"You have been moved from the course \"{}\" to the course \"{}\" by an administrator.\n\n"
+"You can view your new course here: {}\n\n"
+"If you have any questions, please contact the course administrators.\n\n"
+"Best regards,\n"
+"The Course Management System"
