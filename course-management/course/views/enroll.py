@@ -24,6 +24,21 @@ def add(request, course_id):
     if course.is_participant(stud):
         session['enroll-error'] = _('You are already enrolled in this course.')
     else:
+        # Fix for Issue #104: Check if user has reached max enrollments for this subject
+        subject = course.subject
+        if subject.max_enrollments_per_user > 0:
+            # Count how many courses in this subject the user is enrolled in
+            enrolled_count = sum(
+                1 for c in subject.course_set.all()
+                if c.is_participant(stud)
+            )
+            if enrolled_count >= subject.max_enrollments_per_user:
+                session['enroll-error'] = _(
+                    'You have reached the maximum number of enrollments ({}) '
+                    'allowed for this subject.'.format(subject.max_enrollments_per_user)
+                )
+                return redirect_unless_target(request, 'course', course_id)
+        
         if 'enroll-error' in session:
             del session['enroll-error']
         try:

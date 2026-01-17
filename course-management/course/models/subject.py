@@ -5,6 +5,11 @@ from util.html_clean import clean_for_description
 class Subject(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True, default="")
+    # Fix for Issue #104: Allow restricting enrolment to 1 course/subject
+    max_enrollments_per_user = models.IntegerField(
+        default=0,
+        help_text="Maximum number of courses in this subject a user can enroll in. 0 means unlimited."
+    )
 
     def __str__(self):
         return self.name
