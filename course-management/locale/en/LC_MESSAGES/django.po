@@ -1376,3 +1376,51 @@ msgstr ""
 "If you have any questions, please contact the course administrators.\n\n"
 "Best regards,\n"
 "The Course Management System"
+
+#: course/templates/course/move-student.html:5
+msgid "Move Student"
+msgstr "Move Student"
+
+#: course/templates/course/move-student.html:9
+msgid "Student Information"
+msgstr "Student Information"
+
+#: course/templates/course/move-student.html:12
+msgid "Student"
+msgstr "Student"
+
+#: course/templates/course/move-student.html:13
+msgid "Current Course"
+msgstr "Current Course"
+
+#: course/templates/course/move-student.html:19
+msgid "Select Target Course"
+msgstr "Select Target Course"
+
+#: course/templates/course/move-student.html:32
+msgid "-- Select a course --"
+msgstr "-- Select a course --"
+
+#: course/templates/course/move-student.html:50
+msgid "Warning"
+msgstr "Warning"
+
+#: course/templates/course/move-student.html:50
+msgid "This action will remove the student from the current course and enroll them in the selected target course. This action cannot be undone easily."
+msgstr "This action will remove the student from the current course and enroll them in the selected target course. This action cannot be undone easily."
+
+#: course/templates/course/move-student.html:53
+msgid "Move Student"
+msgstr "Move Student"
+
+#: course/templates/course/attendees.html:27
+msgid "Move"
+msgstr "Move"
+
+#: course/forms.py:136
+msgid "Target Course"
+msgstr "Target Course"
+
+#: course/forms.py:137
+msgid "Select the course to move the student to."
+msgstr "Select the course to move the student to."

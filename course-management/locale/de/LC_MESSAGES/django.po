@@ -1585,3 +1585,51 @@ msgstr ""
 "Falls du Fragen hast, wende dich bitte an die Kursadministratoren.\n\n"
 "Mit freundlichen Grüßen,\n"
 "Das Kurs Management System"
+
+#: course/templates/course/move-student.html:5
+msgid "Move Student"
+msgstr "Student verschieben"
+
+#: course/templates/course/move-student.html:9
+msgid "Student Information"
+msgstr "Studenteninformationen"
+
+#: course/templates/course/move-student.html:12
+msgid "Student"
+msgstr "Student"
+
+#: course/templates/course/move-student.html:13
+msgid "Current Course"
+msgstr "Aktueller Kurs"
+
+#: course/templates/course/move-student.html:19
+msgid "Select Target Course"
+msgstr "Zielkurs auswählen"
+
+#: course/templates/course/move-student.html:32
+msgid "-- Select a course --"
+msgstr "-- Kurs auswählen --"
+
+#: course/templates/course/move-student.html:50
+msgid "Warning"
+msgstr "Warnung"
+
+#: course/templates/course/move-student.html:50
+msgid "This action will remove the student from the current course and enroll them in the selected target course. This action cannot be undone easily."
+msgstr "Diese Aktion entfernt den Studenten vom aktuellen Kurs und schreibt ihn in den ausgewählten Zielkurs ein. Diese Aktion kann nicht einfach rückgängig gemacht werden."
+
+#: course/templates/course/move-student.html:53
+msgid "Move Student"
+msgstr "Student verschieben"
+
+#: course/templates/course/attendees.html:27
+msgid "Move"
+msgstr "Verschieben"
+
+#: course/forms.py:136
+msgid "Target Course"
+msgstr "Zielkurs"
+
+#: course/forms.py:137
+msgid "Select the course to move the student to."
+msgstr "Wähle den Kurs aus, zu dem der Student verschoben werden soll."

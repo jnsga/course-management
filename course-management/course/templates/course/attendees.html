@@ -24,11 +24,11 @@
         </td>
         <td>
           {% if user.is_superuser %}
-          <a class="btn btn-link btn-sm" href="{% url 'move-student' course.id student.id %}">{% trans 'Move' %}</a>
+          <a class="btn btn-link" href="{% url 'move-student' course.id student.id %}">{% trans 'Move' %}</a>
           {% endif %}
           <form action="{% url 'unregister-course' course.id student.id %}" method="post" style="display: inline;">
             {% csrf_token %}
-            <input type="submit" class="btn btn-link {% if forloop.counter > course.max_participants %}text-muted{% endif %}" value="{% trans 'Remove' %}">
+            <input type="submit" class="btn btn-link text-danger {% if forloop.counter > course.max_participants %}text-muted{% endif %}" value="{% trans 'Remove' %}">
           </form>
         </td>
       </tr>
